@@ -1,0 +1,1 @@
+function feedback(value)%% requires earlier call of feedback_init, which defines the global var'sglobal correct incorrect wrong_key%function feedback(value)%value of '1' is correct %value of '-1' is incorrect%value of anything else is wrong key pressedif value == 1	sound(correct);elseif value == -1	sound(incorrect);elseif value == 3	sound(wrong_key);end	 
