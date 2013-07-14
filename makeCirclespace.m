@@ -1,4 +1,4 @@
-function [circlespace,meshX,meshY] = make_circlespace(r)
+function [circlespace,meshX,meshY] = makeCirclespace(r)
 
 global window screenRect white black grey xc yc meshX meshY circlespace correct incorrect wrong_key  stim_pixels visual_angle_in_degrees dist_to_screen_cm
 

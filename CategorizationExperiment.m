@@ -9,7 +9,7 @@
 
 % TODO:
 % reduce number of global variables
-% add more functions, cross hair and intertrial interval
+% add more functions (cross hair and intertrial interval)
 % switch to OOP
 
 %% General setup 
@@ -35,7 +35,14 @@ home                                    % moving warning message off Screen
 disp('A categorization experiment.');    % Say hello
 
 %% Get Subject Number
-subjectNumber = input('    Subject Number: ');
+subjectNumber = input('    Subject Number (999 is for debugging): '); % subject # 999 is for debugging
+if (subjectNumber == 999)
+    nDemoTrials = 1;
+    trials = 1;
+else
+    nDemoTrials = 5;
+    trials = 500;
+end
 
 %% Create data file
 if (ismac == 1) 
@@ -62,7 +69,7 @@ grey = [(white+black)/2 (white+black)/2 (white+black)/2];
 xc = screenRect(3)/2; 
 yc = screenRect(4)/2; 
 % Make meshX meshY circlespace
-[circlespace,meshX,meshY] = make_circlespace();
+[circlespace,meshX,meshY] = makeCirclespace();
 % Clear Screen to grey background:
 Screen('FillRect', window,grey);
 Screen('Flip', window);
@@ -81,7 +88,7 @@ demoStimuli = [ 2   22.7013   28.2200    1.0000
                 1   32.4620   22.5100    4.0000
                 1   22.7013   28.2200    5.0000];
             
-for demo_trial = 1 %1:5
+for demoTrial = 1:nDemoTrials
     
     % Present cross hair
     Screen('TextSize', window, 20);
@@ -90,13 +97,13 @@ for demo_trial = 1 %1:5
     WaitSecs(1);
     
     % Draw categorization stimulus
-    show_disc(demoStimuli(demo_trial,:));
+    showDisc(demoStimuli(demoTrial,:));
     
     % Get Responses
-    [response rt] = Get_Response_Demo(demoStimuli(demo_trial,:));
+    [response rt] = getResponseDemo(demoStimuli(demoTrial,:));
     
     % Wait for next trial to start
-    Screen('FillRect', window,grey);  % clear Screen to grey background
+    Screen('FillRect', window, grey);  % clear Screen to grey background
     Screen('Flip', window);           % show it
     waitsecs(.5);                     % intertrial interval
 end
@@ -111,7 +118,7 @@ FlushEvents
 while ~CharAvail end;
 
 %% Experimential trials 
-for trial = 1 %1:nTrials
+for trial = 1:ntrials
 
     % Present cross hair
     Screen('TextSize', window, 20);
@@ -120,10 +127,10 @@ for trial = 1 %1:nTrials
     WaitSecs(1);
 
     % Draw categorization stimulus
-    ShowDisc(stimuli(trial,:),training_history(trial));
+    showDisc(stimuli(trial,:),training_history(trial));
     
     % Get response
-    [response rt] = Get_Response(stimuli(trial,:));
+    [response rt] = getResponse(stimuli(trial,:));
 
     % Write data to file
     % data=[trial corrcat orientation spatialfreq response RT traininghistory stimuli number]' );
